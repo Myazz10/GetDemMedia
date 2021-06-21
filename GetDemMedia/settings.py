@@ -3,6 +3,7 @@ import os
 import django_heroku
 import dj_database_url
 from decouple import config
+import cloudinary_storage
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,6 +28,8 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'video_and_audio.apps.VideoAndAudioConfig',
+    'cloudinary_storage',
+    'cloudinary',
     'django_cleanup',
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,4 +142,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 django_heroku.settings(locals())

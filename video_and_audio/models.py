@@ -1,6 +1,8 @@
 from django.contrib.sessions.models import Session
 from django.db import models
 from django.utils import timezone
+# from cloudinary_storage.storage import VideoMediaCloudinaryStorage
+# from cloudinary_storage.validators import validate_video
 
 
 class ActivityPerSession(models.Model):
@@ -23,7 +25,7 @@ class Audio(models.Model):
     views = models.CharField(max_length=100, null=True, blank=True)
     length = models.CharField(max_length=100, null=True, blank=True)
     api = models.CharField(max_length=50, null=True, blank=True)
-    mp3 = models.FileField(upload_to='audios/', null=True, blank=True)
+    mp3 = models.FileField(upload_to='audios/', null=True, blank=True)#, storage=VideoMediaCloudinaryStorage(), validators=[validate_video])
     downloaded_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -42,7 +44,7 @@ class Video(models.Model):
     views = models.CharField(max_length=100, null=True, blank=True)
     length = models.CharField(max_length=100, null=True, blank=True)
     api = models.CharField(max_length=50, null=True, blank=True)
-    mp4 = models.FileField(upload_to='videos/', null=True, blank=True)
+    mp4 = models.FileField(upload_to='videos/', null=True, blank=True)#, storage=VideoMediaCloudinaryStorage(), validators=[validate_video]))
     downloaded_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

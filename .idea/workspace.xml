@@ -2,6 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bffd2142-8bb5-4851-8921-58bc03be8f84" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GetDemMedia/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GetDemMedia/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/popup_response.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/popup_response.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/popup_response.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/popup_response.js.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/staticfiles.json" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/staticfiles.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/pytube_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/pytube_api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -12,10 +20,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -114,7 +122,7 @@
       <workItem from="1624159526496" duration="592000" />
       <workItem from="1624160365836" duration="40373000" />
       <workItem from="1624201299018" duration="41000" />
-      <workItem from="1624226082834" duration="25508000" />
+      <workItem from="1624226082834" duration="28411000" />
     </task>
     <servers />
   </component>

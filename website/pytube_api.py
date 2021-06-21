@@ -1,5 +1,4 @@
 import os
-from django.contrib.sessions.models import Session
 from django.core.files import File
 from moviepy.audio.io.AudioFileClip import AudioFileClip
 from .models import TitleError, ErrorCharacter
