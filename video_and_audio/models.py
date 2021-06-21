@@ -42,11 +42,11 @@ class Video(models.Model):
 
 
 class ActivityPerSession(models.Model):
-    session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True)
+    session = models.CharField(max_length=100, null=True, blank=True)
     audio_count = models.IntegerField(default=0)
     video_count = models.IntegerField(default=0)
     overall_count = models.IntegerField(default=0)
     last_activity = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.session.session_key
+        return f'{self.session}'

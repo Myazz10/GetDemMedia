@@ -4,21 +4,25 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from .pytube_api import YouTubeFox
 from website.comments import get_comments
-from django.contrib.sessions.models import Session
+import secrets
 
 
 def home(request):
     debug = settings.DEBUG
 
-    if not request.session.session_key:
-        request.session.create()
-        request.session.save()
+    try:
+        marker_key = request.session['marker_key']
+
+    except:
+        marker_key = secrets.token_hex(16)
+        request.session['marker_key'] = str(marker_key)
 
     today = datetime.now()
     context = {
         'debug': debug,
-        'user_marker': request.session.session_key,
+        'user_marker': str(marker_key),
     }
+
     result = True
 
     if request.method == 'POST':
@@ -144,7 +148,7 @@ def download_audio(request):
                     context['views'] = fox.video_details['views']
                     context['length'] = fox.video_details['length']
 
-                    # fox.clean_up()
+                    fox.clean_up()
 
                 else:
                     context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \

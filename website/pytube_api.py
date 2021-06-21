@@ -301,14 +301,11 @@ class YouTubeFox:
 
     def _register_activity(self, file_type):
         try:
-            session = Session.objects.get(pk=self._user)
-            print('Session found here...')
-
             try:
-                if ActivityPerSession.objects.filter(session=session).exists():
-                    print(f'Session exist: {session.session_key}')
-                    session_activity = ActivityPerSession.objects.get(session=session)
-                    session_activity.session = session
+                if ActivityPerSession.objects.filter(session=self._user).exists():
+                    print(f'Session exist: {self._user}')
+                    session_activity = ActivityPerSession.objects.get(session=self._user)
+                    # session_activity.session = self._user
 
                     if file_type == 'mp4':
                         count = session_activity.video_count
@@ -329,7 +326,7 @@ class YouTubeFox:
                 else:
                     print(f'Created session: {self._user}')
                     session_activity = ActivityPerSession()
-                    session_activity.session = session
+                    session_activity.session = self._user
 
                     if file_type == 'mp4':
                         count = session_activity.video_count

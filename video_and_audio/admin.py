@@ -29,6 +29,6 @@ class ActivityPerSessionAdmin(admin.ModelAdmin):
     list_per_page = 100
 
     def session_key(self, obj):
-        return obj.session.session_key
+        return f'{obj.session}'
 
     session_key.short_description = "Session Key"
