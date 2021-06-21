@@ -4,10 +4,14 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from .pytube_api import YouTubeFox
 from website.comments import get_comments
+from django.contrib.sessions.models import Session
 
 
 def home(request):
     debug = settings.DEBUG
+
+    if not request.session.session_key:
+        request.session.create()
 
     today = datetime.now()
     context = {
@@ -23,77 +27,6 @@ def home(request):
             search_url = request.POST.get('search')
             checked_radio = request.POST.get('file-type')
             force_download = request.POST.get('force-download')
-
-            """if checked_radio == 'mp3':
-                fox = YouTubeFox(search_url)
-
-                if not fox.validate_link():
-                    context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
-                else:
-                    api_error, request_amount = fox.download(force_download, 'mp3')
-
-                    if request_amount == 20:
-                        context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
-                                             f'background and none was successful. The API is down at this time. '
-
-                    else:
-                        if not api_error:
-                            result, audio = fox.get_audio()
-
-                            if audio:
-                                context['audio'] = audio
-                                context['title'] = fox.video_details['title']
-                                context['thumbnail'] = fox.video_details['thumbnail']
-                                context['author'] = fox.video_details['author']
-                                context['publish_date'] = fox.video_details['publish_date']
-                                context['views'] = fox.video_details['views']
-                                context['length'] = fox.video_details['length']
-
-                                fox.clean_up()
-
-                            else:
-                                context[
-                                    'special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
-                                                                 'try again in 24 hours. You may also try another url ' \
-                                                                 'now. '
-                        else:
-                            context['api_error'] = 'There is an API error here! Please retry...'
-
-            elif checked_radio == 'mp4':
-                fox = YouTubeFox(search_url)
-
-                if not fox.validate_link():
-                    context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
-
-                else:
-                    api_error, request_amount = fox.download(force_download)
-
-                    if request_amount == 20:
-                        context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
-                                             f'background and none was successful. The API is down at this time. '
-
-                    else:
-                        if not api_error:
-                            result, video = fox.get_video()
-
-                            if video:
-                                context['video'] = video
-                                context['title'] = fox.video_details['title']
-                                context['thumbnail'] = fox.video_details['thumbnail']
-                                context['author'] = fox.video_details['author']
-                                context['publish_date'] = fox.video_details['publish_date']
-                                context['views'] = fox.video_details['views']
-                                context['length'] = fox.video_details['length']
-
-                                fox.clean_up()
-
-                            else:
-                                context[
-                                    'special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
-                                                                 'try again in 24 hours. You may also try another ' \
-                                                                 'url now. '
-                        else:
-                            context['api_error'] = 'There is an API error here! Please retry...'"""
 
         elif submission_form == 'comment-form':
             name = request.POST.get('name')
@@ -160,7 +93,7 @@ def download_video(request):
                     context['views'] = fox.video_details['views']
                     context['length'] = fox.video_details['length']
 
-                    # fox.clean_up()
+                    fox.clean_up()
 
                 else:
                     context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
