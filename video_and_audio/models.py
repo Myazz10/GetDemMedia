@@ -3,8 +3,19 @@ from django.db import models
 from django.utils import timezone
 
 
+class ActivityPerSession(models.Model):
+    session = models.CharField(max_length=100, null=True, blank=True)
+    audio_count = models.IntegerField(default=0)
+    video_count = models.IntegerField(default=0)
+    overall_count = models.IntegerField(default=0)
+    last_activity = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.session}'
+
+
 class Audio(models.Model):
-    identifier = models.CharField(max_length=500, null=True, blank=True)
+    identifier = models.ForeignKey(ActivityPerSession, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     thumbnail = models.URLField(blank=True, null=True)
     author = models.CharField(max_length=500, null=True, blank=True)
@@ -23,7 +34,7 @@ class Audio(models.Model):
 
 
 class Video(models.Model):
-    identifier = models.CharField(max_length=500, null=True, blank=True)
+    identifier = models.ForeignKey(ActivityPerSession, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     thumbnail = models.URLField(blank=True, null=True)
     author = models.CharField(max_length=500, null=True, blank=True)
@@ -41,12 +52,3 @@ class Video(models.Model):
         ordering = ['name', '-downloaded_on']
 
 
-class ActivityPerSession(models.Model):
-    session = models.CharField(max_length=100, null=True, blank=True)
-    audio_count = models.IntegerField(default=0)
-    video_count = models.IntegerField(default=0)
-    overall_count = models.IntegerField(default=0)
-    last_activity = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.session}'

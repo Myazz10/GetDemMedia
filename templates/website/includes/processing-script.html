@@ -52,6 +52,9 @@
         // Hiding the force download div if it has been displayed...
         $("#force-download-div").hide();
 
+        // Hiding the result section after researching again...
+        $(".showcase").hide();
+
         // Toast popup fade in and fade out
         let toast_body = "Your download has began...";
         let icon_color = "gold";
@@ -106,6 +109,8 @@
 
                 // Spinner div with gif to fade out
                 $("#spinner-div").fadeOut();
+                $("#video-link").hide();
+                $("#audio-link").hide();
 
                 if (data.invalid_url){ // Handling the invalid url
                     let toast_body = data.invalid_url
@@ -188,6 +193,8 @@
 
                 // Spinner div with gif to fade out
                 $("#spinner-div").fadeOut();
+                $("#video-link").hide();
+                $("#audio-link").hide();
 
                 if (data.invalid_url){ // Handling the invalid url
                     let toast_body = data.invalid_url

@@ -198,7 +198,14 @@ class YouTubeFox:
                 print('Object was not saved!')
 
             if object_saved:
-                self._register_activity('mp4')
+                try:
+                    if self._register_activity('mp4') is not None:
+                        video.identifier = self._register_activity('mp4')
+                        video.save()
+                except:
+                    print('Could not save the session ID as an identifier')
+
+                # self._register_activity('mp4')
 
             created = True
 
@@ -247,7 +254,14 @@ class YouTubeFox:
                 print('Object was not saved!')
 
             if object_saved:
-                self._register_activity('mp3')
+                try:
+                    if self._register_activity('mp4') is not None:
+                        audio.identifier = self._register_activity('mp3')
+                        audio.save()
+                except:
+                    print('Could not save the session ID as an identifier')
+
+                # self._register_activity('mp3')
 
             created = True
 
@@ -342,8 +356,12 @@ class YouTubeFox:
                     session_activity.overall_count = total
                     session_activity.save()
 
+                return session_activity
+
             except:
                 print('Error for the activity here...')
 
         except:
             print('Error for the session here...')
+
+        return None
