@@ -1,0 +1,23 @@
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5; display:none;" id="toast-parent">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="..." class="rounded me-2" alt=" " style="height:20px; width:20px; background-color: gold;">
+            <strong class="me-auto">Notice!!! <i class="bi bi-megaphone"></i></strong>
+            <small>Just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {% if downloads %}
+                {% if downloads >= 2 %}
+                    You have {{ downloads }} downloads in the system.
+                {% elif downloads > 1 %}
+                    You have {{ downloads }} download in the system.
+                {% else %}
+                    You have no download history here...
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        </div>
+    </div>
+</div>

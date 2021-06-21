@@ -1,0 +1,78 @@
+{% load website_tags %}
+{% load static %}
+
+{% designer as contacts %}
+
+<footer id="footerpad">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-8 mx-auto">
+                <ul class="list-inline text-center mt-3">
+                    {% if contacts.1 %}
+                        <li class="list-inline-item">
+                            <a href="{{ contacts.1 }}" target="_blank">
+                                <span class="fa-stack fa-lg" style="color: #ff5e00;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if contacts.2 %}
+                        <li class="list-inline-item">
+                            <a href="{{ contacts.2 }}" target="_blank">
+                                <span class="fa-stack fa-lg" style="color: #ff5e00;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if contacts.3 %}
+                        <li class="list-inline-item">
+                            <a href="{{ contacts.3 }}" target="_blank">
+                                <span class="fa-stack fa-lg" style="color: #ff5e00;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if contacts.4 %}
+                        <li class="list-inline-item">
+                            <a href="{{ contacts.4 }}" target="_blank">
+                                <span class="fa-stack fa-lg" style="color: #ff5e00;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if current_year > 2021 %}
+                <p class="copyright text-muted text-center">Copyright &copy; <a href="{% url 'home' %}"  style="color: #ff5e00;  text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">{% if website_name %}{{ website_name }}{% else %}GDM TECH{% endif %}</a> 2021 - {{ current_year }} | Made with
+                        <span class="fa-stack fa-sml"><i class="fa fa-heart" style="color: red;"></i></span>by
+                        {% if contacts.0 %}
+                            <a href="{{ contacts.0 }}" target="_blank" style="color: #ff5e00;  text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">Myazz Designz</a>
+                        {% else %}
+                            <a href="#" style="color: #ff5e00;  text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">Myazz Designz</a>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p class="copyright text-muted text-center">Copyright &copy; <a href="{% url 'home' %}"  style="color: #ff5e00;  text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">{% if website_name %}{{ website_name }}{% else %}GDM TECH{% endif %}</a> 2021 | Made with
+                        <span class="fa-stack fa-sml"><i class="fa fa-heart" style="color: red;"></i></span>by
+                        {% if contacts.0 %}
+                            <a href="{{ contacts.0 }}" target="_blank" style="color: #ff5e00;  text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">Myazz Designz</a>
+                        {% else %}
+                            <a href="#" style="color: #ff5e00; text-decoration: none;" onmouseover="this.style.color='#ff9615';" onmouseout="this.style.color='#ff5e00';">Myazz Designz</a>
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <a class="cd-top js-cd-top cd-top--fade-out cd-top--show" style="background: url({% static 'website/assets/img/cd-top-arrow.svg' %}) center / auto no-repeat, #ff5e00;" href="#0">Top</a>
+</footer>

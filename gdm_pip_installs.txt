@@ -1,0 +1,13 @@
+pip install django
+pip install django_cleanup
+pip install django-cloudinary-Storage
+pip install python-magic
+pip install python-magic-bin --> Was removed from the requirements.txt for web hosting on Heroku.
+pip install pytube
+pip install requests
+pip install moviepy
+pip install gunicorn
+pip install python-decouple
+pip install django-heroku
+pip install django-admin-interface
+pip install youtube_dl

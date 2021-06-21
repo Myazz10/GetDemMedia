@@ -1,0 +1,10 @@
+{% load static %}
+
+<span id="event-box" style="visibility: hidden">{{ timer.when|date:"M d, Y H:m:s" }}</span>
+
+<span class="nav-item" style="text-align: center;font-size: 25px;margin:auto;">
+    <a class="nav-link" href="#" >
+        <i class="" style="color: var(--orange);font-size: 20px;">{{ timer.name }}</i>
+        <i id="countdown-box" style="color: var(--orange);font-size: 20px;"></i>
+    </a>
+</span>

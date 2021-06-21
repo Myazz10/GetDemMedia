@@ -1,0 +1,1 @@
+web: gunicorn Get_Dem_Media.wsgi:application

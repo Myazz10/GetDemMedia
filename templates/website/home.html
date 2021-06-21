@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% load website_tags %}
+{% load static %}
+
+{% animated_header_text as animated_text %}
+
+{% block content %}
+    {% include 'website/includes/toasts-popup.html' %}
+
+    <!-- Header with Search Form -->
+    <header class="masthead text-white text-center" style="background: url({% static 'website/assets/img/pexels-garrett-morrow-1649771.jpg' %});background-size: cover;">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="text-nowrap d-flex justify-content-center align-items-center animated-text noSelect" style="background: rgba(255,255,255,0);border-style: none;margin-top: 0px;width: 50%;margin-right: auto;margin-left: auto;">
+                        <div class="caption v-middle text-center">
+                            <h1 class="cd-headline clip">
+                                <span class="blc">Get</span>
+                                <span class="cd-words-wrapper">
+                                    {% if animated_text %}
+                                        <b class="is-visible">{{ animated_text.0 }}</b>
+                                        <b>{{ animated_text.1 }}</b>
+                                        {% if animated_text.2 %}
+                                            <b>{{ animated_text.2 }}</b>
+                                        {% endif %}
+                                        <b>{{ animated_text.3 }}</b>
+                                    {% else %}
+                                        <b class="is-visible">First Paragraph</b>
+                                        <b>Second Paragraph</b>
+                                        <b>Third Paragraph</b>
+                                        <b>Fourth Paragraph</b>
+                                    {% endif %}
+                                </span>
+                                <span class="blinking">|</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                    <div class="col-12 col-md-9 col-xl-12 offset-xl-0 mb-2 mb-md-0">
+                        <form class="text-center align-items-center align-content-center align-self-center bootstrap-form-with-validation" id="download-form">
+                            {% csrf_token %}
+                            {% if success_comment %}
+                                <h2>{{ success_comment }}</h2>
+                                <br>
+                            {% endif %}
+
+                            <h2 class="text-center" id="return-message">Just get the video URL...</h2>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-search"></i></span>
+                                    </div>
+                                    <input class="border rounded form-control" type="search" id="search-input" name="search" placeholder="Enter url here..." required="">
+                                    <input type="hidden" class="form-control" id="user-marker" name="user-marker" value="{{ user_marker }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check mt-5">
+                                    <input class="form-check-input" type="radio" name="file-format" id="mp3" value="mp3" required>
+                                    <label class="form-check-label" for="mp3">Get MP3</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="file-format" id="mp4" value="mp4" required>
+                                    <label class="form-check-label" for="mp4">Get MP4</label>
+
+                                    <div id="force-download-div" style="display: none">
+                                        <hr>
+
+                                        <input class="form-check-input" type="checkbox" id="force-download" name="force-download">
+                                        <label class="form-check-label" for="force-download">Force download if there was an API error.</label>
+
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Search Button -->
+                            <div class="form-group" style="text-align: center;">
+                                <button class="btn btn-warning btn-lg" data-bs-hover-animate="pulse" id="search-btn" style="border-color: #ff9615;" type="submit">
+                                    <span id="serach-btn-text">Search</span>
+                                </button>
+
+                                <!-- Spinner after search starts -->
+                                <div class="text-center mt-5 mb-5" id="spinner-div" style="display:none;">
+                                    <span style="font-size: 20px;">Downloading... </span> <img style="width: 80px; height: 60px;" src="{% static 'website/assets/img/search-btn-loader.gif' %}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% if result %}
+        <!-- Results Section -->
+        <section class="showcase" style="display: none">
+            <div class="container-fluid p-0">
+                <div class="row register-form">
+                    <div class="col">
+                        <div class="container py-5">
+                            <header class="text-center pt-3 pb-5">
+                                <h1 class="display-4 font-weight-bold">Here are your results</h1>
+                                <p class="font-italic text-muted mb-0">We have got the best quality results for you!</p>
+                            </header>
+
+                            <!-- Result Item Title -->
+                            <div class="py-5">
+                                <div class="row">
+                                    <!-- DEMO 4 Item -->
+                                    <div class="col-lg-5">
+                                        <h3 class="font-weight-bold mb-1" id="video-title">{{ title }}</h3>
+                                        <p class="font-italic text-muted mb-2" id="video-author">Author: {{ author|title }}</p>
+                                        <p class="font-italic text-muted mb-2" id="video-views">Views: {{ views }}</p>
+                                    </div>
+
+                                    <!-- Result Item Card with Download Button -->
+                                    <div class="col-lg-7 mb-3 mb-lg-0">
+                                        <div class="hover hover-4 text-white rounded">
+                                            <img src="" alt="" id="video-thumbnail">
+                                            <div class="hover-overlay"></div>
+                                            <div class="hover-4-content">
+                                                <h3 class="hover-4-title text-uppercase font-weight-bold mb-0">
+                                                    <!-- Download Button -->
+                                                    <div class="col d-flex d-xl-flex justify-content-center justify-content-xl-center" >
+                                                        <!-- Will display audio download link -->
+                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="audio-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none" href="" download>
+                                                            <img style="width: 20px;height: 20px;transform: rotate(270deg) translateX(10px) translateY(-85px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
+                                                            <span data-bs-hover-animate="pulse"><strong>Click here&nbsp;</strong><i class="fas fa-download"></i></span>
+                                                            <img style="width: 20px;height: 20px;transform: rotate(90deg) translateX(-9px) translateY(-65px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
+                                                        </a>
+
+                                                        <!-- Will display video download link -->
+                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="video-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none;" href="" download>
+                                                            <img style="width: 20px;height: 20px;transform: rotate(270deg) translateX(10px) translateY(-85px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
+                                                            <span data-bs-hover-animate="pulse"><strong>Click here&nbsp;</strong><i class="fas fa-download"></i></span>
+                                                            <img style="width: 20px;height: 20px;transform: rotate(90deg) translateX(-9px) translateY(-65px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
+                                                        </a>
+                                                    </div>
+                                                </h3>
+                                                <p class="hover-4-description text-uppercase mb-0 small" id="video-length">Length: {{ length }}</p>
+                                                <p class="hover-4-description text-uppercase mb-0  mt-3 small" id="video-publish-date">Published on: {{ publish_date }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}

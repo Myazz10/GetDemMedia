@@ -1,0 +1,256 @@
+<!-- JQUERY TO EXECUTED THE AJAX POST FUNCTION -->
+
+<script type="text/javascript">
+    // Toast popup fade in and fade out
+    function toast_popup(string, icon_color) {
+        // Clearing the toast-header div of all elements within it... Then recreate new elements and add them to the div...
+        $(".toast-header").empty();
+        let image = "<img src='...' class='rounded me-2' alt=' ' style='height:20px; width:20px; background-color: " + icon_color +";'>";
+        let strong = "<strong class='me-auto'>Notice!!! <i class='bi bi-megaphone'></i></strong>";
+        let small = "<small>Just now</small>";
+        let button = "<button type='button' class='btn-close' data-bs-dismiss='toast' aria-label='Close'></button>";
+        let elements = image + strong + small + button;
+        $(".toast-header").append(elements);
+
+        // Clearing the toast-body div of the current string inside it... Then pass the function's receiving string to br appended to this div...
+        $(".toast-body").empty();
+        $(".toast-body").append(string);
+        $(".toast-body").css({"color": "#070D1C"});
+
+        // Allowing the toast div to be displayed within the toast-parent div... It won't be displayed as yet.
+        $("#liveToast").removeClass("toast hide").addClass("toast show");
+
+        // This now will allow the liveToast div to be displayed... Fading in then delay the display then fade out.
+        $("#toast-parent").fadeIn(2000).delay(3000).fadeOut(2000);
+    }
+
+    // To instantly show toast popup when visiting this page...
+    $(document).ready(function() {
+        let toast_body = "Welcome to Gem Dem Media!! Download as you wish please...";
+        let icon_color = "#ff5e00";
+        toast_popup(toast_body, icon_color);
+    });
+
+    // This will assign the value of the selected radio button to a hidden input for POST...as the $("input[name='file-format']:checked").val() not working for me.
+    $(document).on("click", ".form-check-input", function() {
+        $("#file-type").val($(this).val());
+    });
+
+    // To create the user profile without reloading the site...
+    $(document).on("submit", "#download-form", function(e) {
+        e.preventDefault(); // Prevent the page from refreshing...
+
+        // Emptying the returning message h2 tag... preparing it to take another text as a return message...
+        $("#return-message").empty();
+
+        // search button to fade out
+        $("#search-btn").fadeOut();
+
+        // Spinner div with gif to fade in
+        $("#spinner-div").fadeIn(5000);
+
+        // Hiding the force download div if it has been displayed...
+        $("#force-download-div").hide();
+
+        // Toast popup fade in and fade out
+        let toast_body = "Your download has began...";
+        let icon_color = "gold";
+        toast_popup(toast_body, icon_color);
+
+        $.ajax({
+            type: "POST", // Method type...
+            url: "download-director/", // The url that will create a user profile in the background...
+
+            // This will now collect all the data that is specified to be retrieved from the form...
+            data:{
+                url: $("#search-input").val(),
+                user_marker: $("#user-marker").val(),
+                file_format: $("input[name='file-format']:checked").val(),
+                force_download: $("input[name='force-download']:checked").val(),
+                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+            },
+
+            success: function(data) {
+                if (data.file_format === 'mp3'){
+                    seek_out_audio(data);
+                }
+                else if (data.file_format === 'mp4'){
+                    seek_out_video(data);
+                }
+            },
+
+            error: function() {
+                console.log("An error occurred");
+
+                let toast_body = "Your video couldn't download! Please try again...";
+                let icon_color = "red";
+                toast_popup(toast_body, icon_color);
+            }
+        });
+    });
+
+    function seek_out_video(response){
+        $.ajax({
+            type: "GET", // Method type...
+            url: "download-video/", // The url that will create a user profile in the background...
+
+            data: {
+                url: response.url,
+                file_format: response.file_format,
+                user_marker: response.user_marker,
+                force_download: response.force_download,
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                // Spinner div with gif to fade out
+                $("#spinner-div").fadeOut();
+
+                if (data.invalid_url){ // Handling the invalid url
+                    let toast_body = data.invalid_url
+                    let icon_color = "red";
+                    toast_popup(toast_body, icon_color);
+
+                    $("#return-message").html(data.invalid_url).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else if(data.api_error){ // Handling the api error
+                    $("#return-message").html(data.api_error).hide();
+                    $("#return-message").fadeIn(5000);
+
+                    $("#force-download-div").fadeIn(8000);
+                }
+                else if(data.timeout){ // Handling the timeout request
+                    $("#return-message").html(data.timeout).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else if(data.special_characters_flag){ // Handling the special characters error in video title
+                    $("#return-message").html(data.special_characters_flag).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else{
+                    $("#video-title").html(data.title);
+                    $("#video-author").html(data.author);
+                    $("#video-views").html(data.views);
+                    $("#video-thumbnail").attr("src", data.thumbnail);
+                    $("#video-link").attr("href", data.video_url);
+                    $("#video-length").html(data.length);
+                    $("#video-publish-date").html(data.publish_date);
+
+                    $("#video-link").show();
+
+
+                    $(".showcase").fadeIn(5000);
+
+                    let toast_body = "Your video has been downloaded successfully! Please see the results below...";
+                    let icon_color = "green";
+                    toast_popup(toast_body, icon_color);
+                }
+
+                // search button to fade in
+                $("#search-btn").fadeIn(5000);
+            },
+
+            error: function() {
+                console.log("An error occurred");
+
+                // Spinner div with gif to fade out
+                $("#spinner-div").fadeOut();
+
+                let toast_body = "There was an error trying to render the video details! Please try again...";
+                let icon_color = "red";
+                toast_popup(toast_body, icon_color);
+
+                $("#return-message").html("Your video couldn't be downloaded! Please try again...").hide();
+                $("#return-message").fadeIn(5000);
+
+                // search button to fade in
+                $("#search-btn").fadeIn(5000);
+            }
+        });
+    }
+
+    function seek_out_audio(response){
+        $.ajax({
+            type: "GET", // Method type...
+            url: "download-audio/", // The url that will create a user profile in the background...
+
+            data: {
+                url: response.url,
+                file_format: response.file_format,
+                user_marker: response.user_marker,
+                force_download: response.force_download,
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                // Spinner div with gif to fade out
+                $("#spinner-div").fadeOut();
+
+                if (data.invalid_url){ // Handling the invalid url
+                    let toast_body = data.invalid_url
+                    let icon_color = "red";
+                    toast_popup(toast_body, icon_color);
+
+                    $("#return-message").html(data.invalid_url).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else if(data.api_error){ // Handling the api error
+                    $("#return-message").html(data.api_error).hide();
+                    $("#return-message").fadeIn(5000);
+
+                    $("#force-download-div").fadeIn(8000);
+                }
+                else if(data.timeout){ // Handling the timeout request
+                    $("#return-message").html(data.timeout).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else if(data.special_characters_flag){ // Handling the special characters error in video title
+                    $("#return-message").html(data.special_characters_flag).hide();
+                    $("#return-message").fadeIn(5000);
+                }
+                else{
+                    $("#video-title").html(data.title);
+                    $("#video-author").html(data.author);
+                    $("#video-views").html(data.views);
+                    $("#video-thumbnail").attr("src", data.thumbnail);
+                    $("#audio-link").attr("href", data.audio_url);
+                    $("#video-length").html(data.length);
+                    $("#video-publish-date").html(data.publish_date);
+
+                    $("#audio-link").show();
+
+
+                    $(".showcase").fadeIn(5000);
+
+                    let toast_body = "Your audio has been downloaded successfully! Please see the results below...";
+                    let icon_color = "green";
+                    toast_popup(toast_body, icon_color);
+                }
+
+                // search button to fade in
+                $("#search-btn").fadeIn(5000);
+            },
+
+            error: function() {
+                console.log("An error occurred");
+
+                // Spinner div with gif to fade out
+                $("#spinner-div").fadeOut();
+
+                let toast_body = "There was an error trying to render the video details! Please try again...";
+                let icon_color = "red";
+                toast_popup(toast_body, icon_color);
+
+                $("#return-message").html("Your video couldn't be downloaded! Please try again...").hide();
+                $("#return-message").fadeIn(5000);
+
+                // search button to fade in
+                $("#search-btn").fadeIn(5000);
+            }
+        });
+    }
+
+</script>
