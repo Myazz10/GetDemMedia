@@ -13,9 +13,6 @@ urlpatterns = [
     path('download-audio/', download_audio, name="download-audio"),
 ]
 
-if not settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 # To facilitate the uploads of media files to the website... To help create the media url for an image file.
-'''if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)'''
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
