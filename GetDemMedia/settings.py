@@ -22,7 +22,7 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['https://get-dem-media-new.herokuapp.com/']
+    ALLOWED_HOSTS = ['https://get-dem-media.herokuapp.com/']
 
 
 # Application definition
