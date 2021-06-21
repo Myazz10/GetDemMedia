@@ -199,9 +199,8 @@ class YouTubeFox:
 
             if object_saved:
                 try:
-                    if self._register_activity('mp4') is not None:
-                        video.identifier = self._register_activity('mp4')
-                        video.save()
+                    video.identifier = self._register_activity('mp4')
+                    video.save()
                 except:
                     print('Could not save the session ID as an identifier')
 
@@ -255,9 +254,8 @@ class YouTubeFox:
 
             if object_saved:
                 try:
-                    if self._register_activity('mp4') is not None:
-                        audio.identifier = self._register_activity('mp3')
-                        audio.save()
+                    audio.identifier = self._register_activity('mp3')
+                    audio.save()
                 except:
                     print('Could not save the session ID as an identifier')
 
@@ -315,51 +313,45 @@ class YouTubeFox:
 
     def _register_activity(self, file_type):
         try:
-            try:
-                if ActivityPerSession.objects.filter(session=self._user).exists():
-                    print(f'Session exist: {self._user}')
-                    session_activity = ActivityPerSession.objects.get(session=self._user)
-                    # session_activity.session = self._user
+            if ActivityPerSession.objects.filter(session=self._user).exists():
+                print(f'Session exist: {self._user}')
+                session_activity = ActivityPerSession.objects.get(session=self._user)
+                # session_activity.session = self._user
 
-                    if file_type == 'mp4':
-                        count = session_activity.video_count
-                        count += 1
-                        session_activity.video_count = count
+                if file_type == 'mp4':
+                    count = session_activity.video_count
+                    count += 1
+                    session_activity.video_count = count
 
-                    elif file_type == 'mp3':
-                        count = session_activity.audio_count
-                        count += 1
-                        session_activity.audio_count = count
+                elif file_type == 'mp3':
+                    count = session_activity.audio_count
+                    count += 1
+                    session_activity.audio_count = count
 
-                    total = session_activity.audio_count + session_activity.video_count
-                    session_activity.overall_count = total
-                    session_activity.save()
+                total = session_activity.audio_count + session_activity.video_count
+                session_activity.overall_count = total
+                session_activity.save()
 
-                    print('Activity found here...')
+            else:
+                print(f'Created session: {self._user}')
+                session_activity = ActivityPerSession()
+                session_activity.session = self._user
 
-                else:
-                    print(f'Created session: {self._user}')
-                    session_activity = ActivityPerSession()
-                    session_activity.session = self._user
+                if file_type == 'mp4':
+                    count = session_activity.video_count
+                    count += 1
+                    session_activity.video_count = count
 
-                    if file_type == 'mp4':
-                        count = session_activity.video_count
-                        count += 1
-                        session_activity.video_count = count
+                elif file_type == 'mp3':
+                    count = session_activity.audio_count
+                    count += 1
+                    session_activity.audio_count = count
 
-                    elif file_type == 'mp3':
-                        count = session_activity.audio_count
-                        count += 1
-                        session_activity.audio_count = count
+                total = session_activity.audio_count + session_activity.video_count
+                session_activity.overall_count = total
+                session_activity.save()
 
-                    total = session_activity.audio_count + session_activity.video_count
-                    session_activity.overall_count = total
-                    session_activity.save()
-
-                return session_activity
-
-            except:
-                print('Error for the activity here...')
+            return session_activity
 
         except:
             print('Error for the session here...')
