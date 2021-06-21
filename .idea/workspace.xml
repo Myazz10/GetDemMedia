@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bffd2142-8bb5-4851-8921-58bc03be8f84" name="Default Changelist" comment="" />
+    <list default="true" id="bffd2142-8bb5-4851-8921-58bc03be8f84" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +19,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1uCB0OlOgbWSMBlIQsqRS3BStxL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -107,7 +113,7 @@
       <workItem from="1624159526496" duration="592000" />
       <workItem from="1624160365836" duration="40373000" />
       <workItem from="1624201299018" duration="41000" />
-      <workItem from="1624226082834" duration="8863000" />
+      <workItem from="1624226082834" duration="9336000" />
     </task>
     <servers />
   </component>

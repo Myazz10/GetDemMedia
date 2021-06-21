@@ -1,1 +1,1 @@
-web: gunicorn Get_Dem_Media.wsgi:application
+web: gunicorn GetDemMedia.wsgi:application
