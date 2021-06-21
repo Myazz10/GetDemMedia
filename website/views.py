@@ -12,6 +12,7 @@ def home(request):
 
     if not request.session.session_key:
         request.session.create()
+        request.session.save()
 
     today = datetime.now()
     context = {
