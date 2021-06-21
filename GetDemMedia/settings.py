@@ -151,7 +151,7 @@ CLOUDINARY_STORAGE = {
 }
 
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 django_heroku.settings(locals())
