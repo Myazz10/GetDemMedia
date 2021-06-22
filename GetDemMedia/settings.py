@@ -17,12 +17,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
+# DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
+DEBUG = False
 
-if DEBUG:
-    ALLOWED_HOSTS = []
-else:
-    ALLOWED_HOSTS = ['https://get-dem-media.herokuapp.com/']
+
+ALLOWED_HOSTS = ['https://get-dem-media.herokuapp.com/', 'http://127.0.0.1:8000/', '127.0.0.1']
 
 
 # Application definition
@@ -152,6 +151,10 @@ CLOUDINARY_STORAGE = {
 
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Applying my custom settings if this env var is True...
+if os.environ.get('DJANGO_DEVELOPMENT'):
+    from .django_development_settings import *
 
 
 django_heroku.settings(locals())

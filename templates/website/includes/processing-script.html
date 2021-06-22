@@ -85,9 +85,17 @@
             error: function() {
                 console.log("An error occurred");
 
-                let toast_body = "Your video couldn't download! Please try again...";
+                // Spinner div with gif to fade in
+                $("#spinner-div").fadeOut();
+
+                let toast_body = "Your video couldn't be download! Please try again...";
                 let icon_color = "red";
                 toast_popup(toast_body, icon_color);
+
+                $("#return-message").html("Your video couldn't be downloaded! Please try again...").hide();
+                $("#return-message").fadeIn(5000);
+
+                $("#search-btn").fadeIn(5000);
             }
         });
     });
@@ -241,8 +249,6 @@
 
                 // search button to fade in
                 $("#search-btn").fadeIn(5000);
-
-                set_hiding();
             },
 
             error: function() {

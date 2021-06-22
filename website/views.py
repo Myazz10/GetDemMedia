@@ -11,6 +11,8 @@ import secrets
 def home(request):
     debug = settings.DEBUG
 
+    print(debug)
+
     try:
         marker_key = request.session['marker_key']
 
