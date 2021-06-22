@@ -67,7 +67,7 @@
             // This will now collect all the data that is specified to be retrieved from the form...
             data:{
                 url: $("#search-input").val(),
-                user_marker: $("#user-marker").val(),
+                marker: $("#marker").val(),
                 file_format: $("input[name='file-format']:checked").val(),
                 force_download: $("input[name='force-download']:checked").val(),
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
@@ -100,7 +100,7 @@
             data: {
                 url: response.url,
                 file_format: response.file_format,
-                user_marker: response.user_marker,
+                marker: response.marker,
                 force_download: response.force_download,
             },
 
@@ -155,6 +155,8 @@
 
                 // search button to fade in
                 $("#search-btn").fadeIn(5000);
+
+                set_hiding();
             },
 
             error: function() {
@@ -184,7 +186,7 @@
             data: {
                 url: response.url,
                 file_format: response.file_format,
-                user_marker: response.user_marker,
+                marker: response.marker,
                 force_download: response.force_download,
             },
 
@@ -239,6 +241,8 @@
 
                 // search button to fade in
                 $("#search-btn").fadeIn(5000);
+
+                set_hiding();
             },
 
             error: function() {
@@ -259,5 +263,15 @@
             }
         });
     }
+
+    /*$("#video-link").click(function (e) {
+        e.preventDefault();
+        window.location.href = $(this).attr("href");
+    });
+
+    $("#audio-link").click(function (e) {
+        e.preventDefault();
+        window.location.href = $(this).attr("href");
+    });*/
 
 </script>

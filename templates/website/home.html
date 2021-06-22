@@ -56,7 +56,7 @@
                                         <span class="input-group-text"> <i class="fa fa-search"></i></span>
                                     </div>
                                     <input class="border rounded form-control" type="search" id="search-input" name="search" placeholder="Enter url here..." required="">
-                                    <input type="hidden" class="form-control" id="user-marker" name="user-marker" value="{{ user_marker }}">
+                                    <input type="hidden" class="form-control" id="marker" name="marker" value="{{ marker }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -130,14 +130,14 @@
                                                     <!-- Download Button -->
                                                     <div class="col d-flex d-xl-flex justify-content-center justify-content-xl-center" >
                                                         <!-- Will display audio download link -->
-                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="audio-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none" href="" download>
+                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="audio-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none" href="javascript:void(0);" download>
                                                             <img style="width: 20px;height: 20px;transform: rotate(270deg) translateX(10px) translateY(-85px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
                                                             <span data-bs-hover-animate="pulse"><strong>Click here&nbsp;</strong><i class="fas fa-download"></i></span>
                                                             <img style="width: 20px;height: 20px;transform: rotate(90deg) translateX(-9px) translateY(-65px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
                                                         </a>
 
                                                         <!-- Will display video download link -->
-                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="video-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none;" href="" download>
+                                                        <a class="btn btn-primary pulse animated infinite" role="button" id="video-link" type="button" style="background: var(--orange);border-color: var(--dark);margin-top: 0px;width:200px; display: none;" href="javascript:void(0);" download>
                                                             <img style="width: 20px;height: 20px;transform: rotate(270deg) translateX(10px) translateY(-85px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">
                                                             <span data-bs-hover-animate="pulse"><strong>Click here&nbsp;</strong><i class="fas fa-download"></i></span>
                                                             <img style="width: 20px;height: 20px;transform: rotate(90deg) translateX(-9px) translateY(-65px);" src="{% static 'website/assets/img/arrowwhite.gif' %}">

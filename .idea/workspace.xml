@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bffd2142-8bb5-4851-8921-58bc03be8f84" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GetDemMedia/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GetDemMedia/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website/includes/processing-script.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website/includes/processing-script.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/video_and_audio/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_and_audio/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/pytube_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/pytube_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +120,8 @@
       <workItem from="1624159526496" duration="592000" />
       <workItem from="1624160365836" duration="40373000" />
       <workItem from="1624201299018" duration="41000" />
-      <workItem from="1624226082834" duration="30600000" />
+      <workItem from="1624226082834" duration="31591000" />
+      <workItem from="1624307375053" duration="15285000" />
     </task>
     <servers />
   </component>

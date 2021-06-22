@@ -8,11 +8,11 @@ from django.conf import settings
 
 
 class YouTubeFox:
-    def __init__(self, url, user_marker):
+    def __init__(self, url, marker):
         self._title = ''
         self.filename = None
         self._url = url
-        self._user = user_marker
+        self._user = marker
         self._video_file = None
         self._audio_file = None
         self.video_details = {}
@@ -170,7 +170,6 @@ class YouTubeFox:
 
     def get_video(self):
         created = False
-        object_saved = False
         video = Video()
 
         try:
@@ -186,24 +185,14 @@ class YouTubeFox:
             video.length = str(self.video_details['length'])
 
             try:
-                video.identifier = str(self._user)
+                video.identifier = self._register_activity('mp4')
             except:
                 print('Could not save the session ID as an identifier')
 
             try:
                 video.save()
-                object_saved = True
             except:
                 print('Object was not saved!')
-
-            if object_saved:
-                try:
-                    video.identifier = self._register_activity('mp4')
-                    video.save()
-                except:
-                    print('Could not save the session ID as an identifier')
-
-                # self._register_activity('mp4')
 
             created = True
 
@@ -218,7 +207,6 @@ class YouTubeFox:
 
     def get_audio(self):
         created = False
-        object_saved = False
         audio = Audio()
 
         self._audio_file = f'{self.filename}.mp3'
@@ -241,24 +229,14 @@ class YouTubeFox:
             audio.length = str(self.video_details['length'])
 
             try:
-                audio.identifier = str(self._user)
+                audio.identifier = self._register_activity('mp3')
             except:
                 print('Could not save the session ID as an identifier')
 
             try:
                 audio.save()
-                object_saved = True
             except:
                 print('Object was not saved!')
-
-            if object_saved:
-                try:
-                    audio.identifier = self._register_activity('mp3')
-                    audio.save()
-                except:
-                    print('Could not save the session ID as an identifier')
-
-                # self._register_activity('mp3')
 
             created = True
 
