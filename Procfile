@@ -1,1 +1,1 @@
-web: gunicorn GetDemMedia.wsgi:application --timeout 120
+web: gunicorn GetDemMedia.wsgi:application --preload --timeout 120
