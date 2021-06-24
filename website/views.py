@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
@@ -10,8 +11,6 @@ import secrets
 
 def home(request):
     debug = settings.DEBUG
-
-    print(debug)
 
     try:
         marker_key = request.session['marker_key']
@@ -101,7 +100,7 @@ def download_video(request):
                     context['views'] = fox.video_details['views']
                     context['length'] = fox.video_details['length']
 
-                    # fox.clean_up()
+                    fox.clean_up()
 
                 else:
                     context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
@@ -151,7 +150,7 @@ def download_audio(request):
                     context['views'] = fox.video_details['views']
                     context['length'] = fox.video_details['length']
 
-                    # fox.clean_up()
+                    fox.clean_up()
 
                 else:
                     context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
@@ -162,4 +161,10 @@ def download_audio(request):
 
     return JsonResponse(context)
 
+
 # https://youtu.be/o9aaoiyJlcM
+
+
+def change_settings(debug):
+
+    os.environ["DJANGO_SETTINGS_MODULE"] = "GetDemMedia.settings"
