@@ -51,116 +51,124 @@ def home(request):
 
 
 def download_director(request):
-    context = {
-        'url': request.POST.get('url'),
-        'file_format': request.POST.get('file_format'),
-        'marker': request.POST.get('marker'),
-        'force_download': request.POST.get('force_download'),
-    }
-    return JsonResponse(context)
+    if request.is_ajax():
+        context = {
+            'url': request.POST.get('url'),
+            'file_format': request.POST.get('file_format'),
+            'marker': request.POST.get('marker'),
+            'force_download': request.POST.get('force_download'),
+        }
+        return JsonResponse(context)
+    else:
+        return redirect('home')
 
 
 def download_video(request):
-    context = {}
+    if request.is_ajax():
+        context = {}
 
-    # Because these has been retrieved via the GET method... They have been passed as an array/list respectively...
-    url = request.GET.get('url'),
-    file_format = request.GET.get('file_format'),
-    marker = request.GET.get('marker'),
-    force_download = request.GET.get('force_download'),
+        # Because these has been retrieved via the GET method... They have been passed as an array/list respectively...
+        url = request.GET.get('url'),
+        file_format = request.GET.get('file_format'),
+        marker = request.GET.get('marker'),
+        force_download = request.GET.get('force_download'),
 
-    context['url'] = url[0]
-    context['file_format'] = file_format[0]
-    context['marker'] = marker[0]
-    context['force_download'] = force_download[0]
+        context['url'] = url[0]
+        context['file_format'] = file_format[0]
+        context['marker'] = marker[0]
+        context['force_download'] = force_download[0]
 
-    fox = YouTubeFox(url[0], marker[0])
+        fox = YouTubeFox(url[0], marker[0])
 
-    if not fox.validate_link():
-        context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
-
-    else:
-        api_error, request_amount = fox.download(force_download[0])
-        # api_error, request_amount = fox.download()
-
-        if request_amount == 20:
-            context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
-                                 f'background and none was successful. The API is down at this time. '
+        if not fox.validate_link():
+            context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
 
         else:
-            if not api_error:
-                result, video = fox.get_video()
+            api_error, request_amount = fox.download(force_download[0])
+            # api_error, request_amount = fox.download()
 
-                if video:
-                    context['video_url'] = video.mp4.url
-                    context['title'] = fox.video_details['title']
-                    context['thumbnail'] = fox.video_details['thumbnail']
-                    context['author'] = fox.video_details['author']
-                    context['publish_date'] = video.publish_date
-                    context['views'] = fox.video_details['views']
-                    context['length'] = fox.video_details['length']
+            if request_amount == 20:
+                context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
+                                     f'background and none was successful. The API is down at this time. '
 
-                    fox.clean_up()
-
-                else:
-                    context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
-                                                         'try again in 24 hours. You may also try another ' \
-                                                         'url now. '
             else:
-                context['api_error'] = 'There is an API error here! Please retry...'
+                if not api_error:
+                    result, video = fox.get_video()
 
-    return JsonResponse(context)
+                    if video:
+                        context['video_url'] = video.mp4.url
+                        context['title'] = fox.video_details['title']
+                        context['thumbnail'] = fox.video_details['thumbnail']
+                        context['author'] = fox.video_details['author']
+                        context['publish_date'] = video.publish_date
+                        context['views'] = fox.video_details['views']
+                        context['length'] = fox.video_details['length']
+
+                        fox.clean_up()
+
+                    else:
+                        context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
+                                                             'try again in 24 hours. You may also try another ' \
+                                                             'url now. '
+                else:
+                    context['api_error'] = 'There is an API error here! Please retry...'
+
+        return JsonResponse(context)
+    else:
+        return redirect('home')
 
 
 def download_audio(request):
-    context = {}
+    if request.is_ajax():
+        context = {}
 
-    # Because these has been retrieved via the GET method... They have been passed as an array/list respectively...
-    url = request.GET.get('url'),
-    file_format = request.GET.get('file_format'),
-    marker = request.GET.get('marker'),
-    force_download = request.GET.get('force_download'),
+        # Because these has been retrieved via the GET method... They have been passed as an array/list respectively...
+        url = request.GET.get('url'),
+        file_format = request.GET.get('file_format'),
+        marker = request.GET.get('marker'),
+        force_download = request.GET.get('force_download'),
 
-    context['url'] = url[0]
-    context['file_format'] = file_format[0]
-    context['marker'] = marker[0]
-    context['force_download'] = force_download[0]
+        context['url'] = url[0]
+        context['file_format'] = file_format[0]
+        context['marker'] = marker[0]
+        context['force_download'] = force_download[0]
 
-    fox = YouTubeFox(url[0], marker[0])
+        fox = YouTubeFox(url[0], marker[0])
 
-    if not fox.validate_link():
-        context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
-    else:
-        api_error, request_amount = fox.download(force_download[0], 'mp3')
-
-        if request_amount == 20:
-            context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
-                                 f'background and none was successful. The API is down at this time. '
-
+        if not fox.validate_link():
+            context['invalid_url'] = 'This is not a valid YouTube url... Get a valid url please!'
         else:
-            if not api_error:
-                result, audio = fox.get_audio()
+            api_error, request_amount = fox.download(force_download[0], 'mp3')
 
-                if audio:
-                    context['audio_url'] = audio.mp3.url
-                    context['title'] = fox.video_details['title']
-                    context['thumbnail'] = fox.video_details['thumbnail']
-                    context['author'] = fox.video_details['author']
-                    context['publish_date'] = audio.publish_date
-                    context['views'] = fox.video_details['views']
-                    context['length'] = fox.video_details['length']
+            if request_amount == 20:
+                context['timeout'] = f'{request_amount} amount of requests has been sent in the ' \
+                                     f'background and none was successful. The API is down at this time. '
 
-                    fox.clean_up()
-
-                else:
-                    context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
-                                                         'try again in 24 hours. You may also try another url ' \
-                                                         'now. '
             else:
-                context['api_error'] = 'There is an API error here! Please retry...'
+                if not api_error:
+                    result, audio = fox.get_audio()
 
-    return JsonResponse(context)
+                    if audio:
+                        context['audio_url'] = audio.mp3.url
+                        context['title'] = fox.video_details['title']
+                        context['thumbnail'] = fox.video_details['thumbnail']
+                        context['author'] = fox.video_details['author']
+                        context['publish_date'] = audio.publish_date
+                        context['views'] = fox.video_details['views']
+                        context['length'] = fox.video_details['length']
 
+                        fox.clean_up()
+
+                    else:
+                        context['special_characters_flag'] = 'This video url cannot be converted right now. Please ' \
+                                                             'try again in 24 hours. You may also try another url ' \
+                                                             'now. '
+                else:
+                    context['api_error'] = 'There is an API error here! Please retry...'
+
+        return JsonResponse(context)
+    else:
+        return redirect('home')
 
 # https://youtu.be/o9aaoiyJlcM
 
